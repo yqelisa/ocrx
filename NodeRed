@@ -1,0 +1,251 @@
+[
+    {
+        "id": "1227367c.6488da",
+        "type": "change",
+        "z": "4a35cecf.4e339",
+        "name": "Extract image URL",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.imageurl",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 385,
+        "y": 281,
+        "wires": [
+            [
+                "a84600cd.3038"
+            ]
+        ]
+    },
+    {
+        "id": "9e654861.62fae8",
+        "type": "switch",
+        "z": "4a35cecf.4e339",
+        "name": "Check image url",
+        "property": "payload.imageurl",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 351,
+        "y": 200,
+        "wires": [
+            [
+                "1c43a57a.2601cb"
+            ],
+            [
+                "1227367c.6488da"
+            ]
+        ]
+    },
+    {
+        "id": "f0266f5.3020a9",
+        "type": "http in",
+        "z": "4a35cecf.4e339",
+        "name": "",
+        "url": "/ocrx",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 141,
+        "y": 200,
+        "wires": [
+            [
+                "9e654861.62fae8"
+            ]
+        ]
+    },
+    {
+        "id": "1c43a57a.2601cb",
+        "type": "template",
+        "z": "4a35cecf.4e339",
+        "name": "Prompt images",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "\n<script src=\"https://rawgit.com/thomellis/polymer-cdn/master/lib/webcomponentsjs/webcomponents-lite.min.js\"></script>\n<link rel=\"import\" href=\"https://rawgit.com/thomellis/polymer-cdn/master/lib/polymer/polymer.html\">\n<link rel=\"import\" href=\"https://rawgit.com/thomellis/polymer-cdn/master/lib/paper-button/paper-button.html\">\n<link rel=\"import\" href=\"https://rawgit.com/thomellis/polymer-cdn/master/lib/paper-dropdown-menu/paper-dropdown-menu.html\">\n<link rel=\"import\" href=\"https://rawgit.com/thomellis/polymer-cdn/master/lib/paper-input/paper-input.html\">\n{{!--<link rel=\"import\" href=\"https://cdn.rawgit.com/download/polymer-cdn/1.0.1/lib/paper-card/paper-card.html\">--}}\n{{!--<link rel=\"import\" href=\"https://cdn.rawgit.com/download/polymer-cdn/1.0.1/lib/paper-styles/paper-styles.html\">--}}\n\n\n<body>\n\n<div id=\"main\">\n<h1>OCRx</h1>\n<H2>Get better, faster.</H2>\n<form  action=\"{{req._parsedUrl.pathname}}\">\n    <img src=\"https://m.riteaid.com/SDRiteRewards/Images/Sato_Label.png\" height='200'/>\n    <img src=\"https://files.slack.com/files-pri/T4WEE725R-F4WKQHYTE/label1.jpg\" height='200'/>\n    \n    \n    {{!--<img src=\"http://provcomm.ibx.com/ProvComm/ProvComm.nsf/0/1a687a19c7f2540f852579ba0053c0e4/$FILE/idCard.jpg\" height='200'/>--}}\n    {{!--<img src=\"https://www.keystonefirstpa.com/assets/images/id-card.jpg\" height='200'/>--}}\n    {{!--<img src=\"http://www.mirena-us.com/images/img-popup_sample_insurance_card.png\" height='200'/>--}}\n       {{!--<br/>Right-click one of the above images and select Copy image location and paste the URL in the box below.<br>Do an image search for sample insurance cards. After you click on an image, to the right it usually says \"View image\" click that to get the URL.<br/>--}}\n    <br>With just a photo of your prescription label, we'll set up automatic reminders for your personalized dosing schedule!<br>\n    {{!--<br>Image URL: <input type=\"text\" name=\"imageurl\"/>--}}\n    <paper-input style=\"width: 250px; display: inline-block;\" name=\"imageurl\" id=\"imgurl\" label=\"Image URL\"></paper-input>\n    <input type=\"submit\" value=\"Schedule my reminders\"/>\n</form>\n\n{{!--<input type=\"file\" capture=\"camera\" accept=\"image/*\" id=\"cameraInput\" name=\"cameraInput\">--}}\n\n\n<script type=\"text/javascript\" src=\"https://static.filestackapi.com/v3/filestack.js\"></script>\n<script>\n    var client = filestack.init('AYO93l3FSQG2AUlJgRkQxz');\n    function showPicker() {\n        client.pick({\n        }).then(function(result) {\n            var obj = JSON.stringify(result.filesUploaded);\n            console.log(obj);\n            document.getElementById(\"imgurl\").value = result.filesUploaded[0].url;\n        });\n    }\n</script>\n<input type=\"button\" value=\"Upload\" onclick=\"showPicker()\" />\n          \n\n\n</div>\n</body>\n\n\n<style type=\"text/css\" style=\"display: none\">\n    input[type=submit] {\n        font-family: 'Roboto', 'Noto', sans-serif;\n        font-size: 14px;\n        background-color: #3f51b5;\n        color: white;\n        border: none;\n        border-radius: 3px;\n        padding: 7px 15px;\n        margin-left: 6px;\n        box-shadow: 1px 1px 2px #888888;\n    }\n    body {\n        background-color: #fafafa;\n        padding: 100px;\n        font-family: 'Roboto', 'Noto', sans-serif;\n    }\n    h1 {\n        color: #3f51b5;\n        font-family: 'Roboto', 'Noto', sans-serif;\n    }\n</style>",
+        "x": 591,
+        "y": 200,
+        "wires": [
+            [
+                "ba0d1db9.b19f6"
+            ]
+        ]
+    },
+    {
+        "id": "af77c64d.8147f8",
+        "type": "template",
+        "z": "4a35cecf.4e339",
+        "name": "Report text via HTML template",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<h1>We've imported your instructions!</h1>\n<h2>OCRx&#8482; has set up your reminders.</h2>\n\n<p>{{result.images.0.resolved_url}}<br/><img id=\"image\" src=\"{{result.images.0.resolved_url}}\" height=\"200\"/></p>\n{{^result}}\n    <P>No text detected</P>\n{{/result}}\n<p>Images Processed: {{result.images_processed}}</p>\n<p id=\"result\">{{result.images.0.text}}</p>\n\n<form  action=\"{{req._parsedUrl.pathname}}\">\n    <br><input type=\"submit\" value=\"Schedule more reminders\"/>\n</form>\n    \n<script type=\"text/javascript\">\n    function schedule(str) {\n        alert(str);\n    }\n    \n    schedule(document.getElementById(\"result\").innerHTML);\n</script>    \n\n<style type=\"text/css\" style=\"display: none\">\n    input[type=submit] {\n        font-family: 'Roboto', 'Noto', sans-serif;\n        font-size: 14px;\n        background-color: #3f51b5;\n        color: white;\n        border: none;\n        border-radius: 3px;\n        padding: 7px 15px;\n        margin-left: 6px;\n        box-shadow: 1px 1px 2px #888888;\n    }    \n    body {\n        background-color: #fafafa;\n        padding: 100px;\n        font-family: 'Roboto', 'Noto', sans-serif;\n    }\n    h1 {\n        color: #3f51b5;\n        font-family: 'Roboto', 'Noto', sans-serif;\n    }\n</style>    ",
+        "x": 619,
+        "y": 338,
+        "wires": [
+            [
+                "ba0d1db9.b19f6"
+            ]
+        ]
+    },
+    {
+        "id": "ba0d1db9.b19f6",
+        "type": "http response",
+        "z": "4a35cecf.4e339",
+        "name": "",
+        "x": 861,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "a84600cd.3038",
+        "type": "visual-recognition-v3",
+        "z": "4a35cecf.4e339",
+        "name": "hi",
+        "apikey": "",
+        "image-feature": "recognizeText",
+        "x": 335,
+        "y": 387,
+        "wires": [
+            [
+                "af77c64d.8147f8",
+                "b4f12c99.4adfe",
+                "d7e4875b.c35778",
+                "23bfb225.3bb30e"
+            ]
+        ]
+    },
+    {
+        "id": "b4f12c99.4adfe",
+        "type": "debug",
+        "z": "4a35cecf.4e339",
+        "name": "Print msg.result.images",
+        "active": true,
+        "console": "false",
+        "complete": "result.images.0",
+        "x": 611,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "d7e4875b.c35778",
+        "type": "debug",
+        "z": "4a35cecf.4e339",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "result.images.0.text",
+        "x": 621,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6a97fb74.eb2cb4",
+        "type": "twilio out",
+        "z": "4a35cecf.4e339",
+        "service": "_ext_",
+        "twilio": "a220f41d.4d5f88",
+        "from": "",
+        "number": "+19178337518",
+        "name": "SMS alert to admin",
+        "x": 924.5,
+        "y": 586,
+        "wires": []
+    },
+    {
+        "id": "23bfb225.3bb30e",
+        "type": "change",
+        "z": "4a35cecf.4e339",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "result.images.0.text",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 614.5,
+        "y": 516,
+        "wires": [
+            [
+                "6a97fb74.eb2cb4"
+            ]
+        ]
+    },
+    {
+        "id": "a277cf9f.4cc13",
+        "type": "template",
+        "z": "4a35cecf.4e339",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Google Calendar API Quickstart</title>\n    <meta charset='utf-8' />\n  </head>\n  <body>\n    <p>Google Calendar API Quickstart</p>\n\n    <!--Add buttons to initiate auth sequence and sign out-->\n    <button id=\"authorize-button\" style=\"display: none;\">Authorize</button>\n    <button id=\"signout-button\" style=\"display: none;\">Sign Out</button>\n\n    <pre id=\"content\"></pre>\n\n    <script type=\"text/javascript\">\n      // Client ID and API key from the Developer Console\n      var CLIENT_ID = '1030051499913-krfgbatek1i2ibjbss0lr4q60u101lh8.apps.googleusercontent.com';\n\n      // Array of API discovery doc URLs for APIs used by the quickstart\n      var DISCOVERY_DOCS = [\"https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest\"];\n\n      // Authorization scopes required by the API; multiple scopes can be\n      // included, separated by spaces.\n      var SCOPES = \"https://www.googleapis.com/auth/calendar\";\n\n      var authorizeButton = document.getElementById('authorize-button');\n      var signoutButton = document.getElementById('signout-button');\n\n      /**\n       *  On load, called to load the auth2 library and API client library.\n       */\n      function handleClientLoad() {\n        gapi.load('client:auth2', initClient);\n      }\n\n      /**\n       *  Initializes the API client library and sets up sign-in state\n       *  listeners.\n       */\n      function initClient() {\n        gapi.client.init({\n          discoveryDocs: DISCOVERY_DOCS,\n          clientId: CLIENT_ID,\n          scope: SCOPES\n        }).then(function () {\n          // Listen for sign-in state changes.\n          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);\n\n          // Handle the initial sign-in state.\n          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());\n          authorizeButton.onclick = handleAuthClick;\n          signoutButton.onclick = handleSignoutClick;\n        });\n      }\n\n      /**\n       *  Called when the signed in status changes, to update the UI\n       *  appropriately. After a sign-in, the API is called.\n       */\n      function updateSigninStatus(isSignedIn) {\n        if (isSignedIn) {\n          authorizeButton.style.display = 'none';\n          signoutButton.style.display = 'block';\n          listUpcomingEvents();\n        } else {\n          authorizeButton.style.display = 'block';\n          signoutButton.style.display = 'none';\n        }\n      }\n\n      /**\n       *  Sign in the user upon button click.\n       */\n      function handleAuthClick(event) {\n        gapi.auth2.getAuthInstance().signIn();\n      }\n\n      /**\n       *  Sign out the user upon button click.\n       */\n      function handleSignoutClick(event) {\n        gapi.auth2.getAuthInstance().signOut();\n      }\n\n      /**\n       * Append a pre element to the body containing the given message\n       * as its text node. Used to display the results of the API call.\n       *\n       * @param {string} message Text to be placed in pre element.\n       */\n      function appendPre(message) {\n        var pre = document.getElementById('content');\n        var textContent = document.createTextNode(message + '\\n');\n        pre.appendChild(textContent);\n      }\n\n      /**\n       * Print the summary and start datetime/date of the next ten events in\n       * the authorized user's calendar. If no events are found an\n       * appropriate message is printed.\n       */\n      function listUpcomingEvents() {\n\n\n        var event = {\n          'summary': 'Google I/O 2015',\n          'location': '800 Howard St., San Francisco, CA 94103',\n          'description': 'A chance to hear more about Google\\'s developer products.',\n          'start': {\n            'dateTime': '2017-04-08T09:00:00-07:00',\n            'timeZone': 'America/Los_Angeles'\n          },\n          'end': {\n            'dateTime': '2017-04-08T17:00:00-07:00',\n            'timeZone': 'America/Los_Angeles'\n          },\n          'recurrence': [\n            'RRULE:FREQ=DAILY;COUNT=2'\n          ],\n          'attendees': [\n            {'email': 'lpage@example.com'},\n            {'email': 'sbrin@example.com'}\n          ],\n          'reminders': {\n            'useDefault': false,\n            'overrides': [\n              {'method': 'email', 'minutes': 24 * 60},\n              {'method': 'popup', 'minutes': 10}\n            ]\n          }\n        };\n\n        var request = gapi.client.calendar.events.insert({\n          'calendarId': 'primary',\n          'resource': event\n        });\n\n        request.execute(function(event) {\n          appendPre('Event created: ' + event.htmlLink);\n        });\n\n        gapi.client.calendar.events.list({\n          'calendarId': 'primary',\n          'timeMin': (new Date()).toISOString(),\n          'showDeleted': false,\n          'singleEvents': true,\n          'maxResults': 10,\n          'orderBy': 'startTime'\n        }).then(function(response) {\n          var events = response.result.items;\n          appendPre('Upcoming events:');\n\n          if (events.length > 0) {\n            for (i = 0; i < events.length; i++) {\n              var event = events[i];\n              var when = event.start.dateTime;\n              if (!when) {\n                when = event.start.date;\n              }\n              appendPre(event.summary + ' (' + when + ')')\n            }\n          } else {\n            appendPre('No upcoming events found.');\n          }\n        });\n      }\n\n    </script>\n\n    <script async defer src=\"https://apis.google.com/js/api.js\"\n      onload=\"this.onload=function(){};handleClientLoad()\"\n      onreadystatechange=\"if (this.readyState === 'complete') this.onload()\">\n    </script>\n  </body>\n</html>",
+        "x": 436.5,
+        "y": 659,
+        "wires": [
+            [
+                "2c7dc381.4ee0dc"
+            ]
+        ]
+    },
+    {
+        "id": "912dfbf4.0b1828",
+        "type": "http in",
+        "z": "4a35cecf.4e339",
+        "name": "calendar",
+        "url": "/calendar",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 286.5,
+        "y": 656,
+        "wires": [
+            [
+                "a277cf9f.4cc13"
+            ]
+        ]
+    },
+    {
+        "id": "2c7dc381.4ee0dc",
+        "type": "http response",
+        "z": "4a35cecf.4e339",
+        "name": "",
+        "x": 610.5,
+        "y": 666,
+        "wires": []
+    },
+    {
+        "id": "a220f41d.4d5f88",
+        "type": "twilio-api",
+        "z": "",
+        "sid": "AC1770f0ab8f71a3954a4161b14d614b68",
+        "from": "13479527895",
+        "name": "SMS alert to admin"
+    }
+]
