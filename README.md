@@ -37,8 +37,7 @@ link: https://medicine-reminders.mybluemix.net/ocrx
 Step 4. Import the information into calendar (automatically done by OCRx)  
 ![ocrx_3](https://cloud.githubusercontent.com/assets/26291399/25049698/184704f4-2111-11e7-9ae4-454d79821d31.png)
 
-![ocrx_4](https://cloud.githubusercontent.com/assets/26291399/25049704/1da11b4c-2111-11e7-997b-613a24420489.png)
-
+![ocrx_4](https://cloud.githubusercontent.com/assets/26291399/25051584/6ac018ec-211b-11e7-86bc-d0739fd445bf.png)
 
 
 
