@@ -4,14 +4,22 @@
 
 A web application that helps patients with medication adherence by converting prescription images to calendar notifications.   
 -- powered by IBM Bluemix
----
+
 
 ## Authors  
 
 Lucy He  
 Wendy Sun  
 Elisa Yao  
----
+
+
+## Built With
+
+* Node-RED - Framework  
+* FileStack - Image uploading and URL generation  
+* Watson Visual Recognition - OCR back end  
+* Google Calendar API - Importing into user calendar  
+
 
 ## Instructions  
 
